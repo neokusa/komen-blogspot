@@ -1,0 +1,30 @@
+name: Update data.json
+
+on:
+  push:
+    branches:
+      - main  # Jalankan workflow pada push ke branch main
+  schedule:
+    - cron: '0 * * * *'  # Jalankan workflow setiap jam
+
+jobs:
+  update-json:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Update data.json
+        run: |
+          # Contoh skrip sederhana untuk memperbarui data.json
+          # Gantilah skrip ini dengan logika yang sesuai untuk memperbarui data Anda
+          echo '{"updated_at": "$(date)"}' > data.json
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add data.json
+          git commit -m "Update data.json"
+          git push
