@@ -15,7 +15,23 @@ jobs:
 
     - name: Update data.json
       run: |
+        echo "Running script to update data.json"
         # Your script to update data.json
+        # Example:
+        # python update_data.py
+        if [ $? -ne 0 ]; then
+          echo "Script to update data.json failed"
+          exit 1
+        fi
+
+    - name: Check for changes
+      run: |
+        if git diff --exit-code data.json; then
+          echo "No changes detected in data.json"
+          exit 0
+        else
+          echo "Changes detected in data.json"
+        fi
 
     - name: Commit and push changes
       env:
